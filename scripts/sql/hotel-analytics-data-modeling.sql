@@ -15,8 +15,8 @@ ALTER COLUMN checkout_date TYPE DATE USING checkout_date::DATE,
 ALTER COLUMN no_guests TYPE INT USING no_guests::INT,
 ALTER COLUMN room_category TYPE TEXT,
 ALTER COLUMN ratings_given TYPE INT USING ratings_given::INT,
-ALTER COLUMN revenue_generated TYPE REAL USING revenue_generated::REAL,
-ALTER COLUMN revenue_realized TYPE REAL USING revenue_realized::REAL;
+ALTER COLUMN revenue_generated TYPE NUMERIC USING revenue_generated::NUMERIC,
+ALTER COLUMN revenue_realized TYPE NUMERIC USING revenue_realized::NUMERIC;
 
 
 ---fact_aggregated_bookings
@@ -35,7 +35,7 @@ ALTER COLUMN check_in_date TYPE DATE USING check_in_date::DATE,
 ALTER COLUMN room_category TYPE TEXT,
 ALTER COLUMN successful_bookings TYPE INT USING successful_bookings::INT,
 ALTER COLUMN capacity TYPE INT USING capacity::INT,
-ALTER COLUMN occ_rate TYPE REAL USING occ_rate::REAL;
+ALTER COLUMN occ_rate TYPE NUMERIC USING occ_rate::NUMERIC;
 
 --dim_date
 SELECT *
