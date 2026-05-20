@@ -40,7 +40,7 @@ ALTER COLUMN occ_rate TYPE NUMERIC USING occ_rate::NUMERIC;
 --dim_date
 SELECT *
 FROM dim_date;
-
+          
 SELECT column_name, data_type
 FROM information_schema.columns
 WHERE table_name = 'dim_date';
