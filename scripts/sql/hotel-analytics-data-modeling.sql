@@ -60,7 +60,7 @@ SELECT
     TO_CHAR(datum, 'IW')::INT AS week_no,
     CASE 
         WHEN EXTRACT(DOW FROM datum) IN (0, 6) THEN 'weekend' 
-        ELSE 'weekeday' 
+        ELSE 'weekday' 
     END AS day_type
 FROM generate_series(
     '2022-01-01'::date, 

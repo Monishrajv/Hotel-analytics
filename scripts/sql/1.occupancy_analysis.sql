@@ -1,7 +1,6 @@
 ---KPI 1 — Occupancy % [BUSINESS QUESTION] How efficiently are hotel rooms being utilized?
 SELECT
     property_id,
-    check_in_date,
     SUM(successful_bookings) AS total_successful_bookings,
     SUM(capacity) AS total_capacity,
 
@@ -14,5 +13,4 @@ SELECT
 FROM fact_aggregated_bookings
 
 GROUP BY
-    property_id,
-    check_in_date;
+    property_id;

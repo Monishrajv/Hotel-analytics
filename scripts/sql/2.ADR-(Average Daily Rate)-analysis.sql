@@ -22,9 +22,3 @@ WHERE fb.booking_status = 'Checked Out'
 GROUP BY
     fab.property_id,
     fab.check_in_date;
-
-SELECT *
-FROM fact_bookings;
-
-SELECT *
-FROM fact_aggregated_bookings;
