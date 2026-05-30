@@ -11,6 +11,7 @@ __pycache__/
 venv/
 ENV/
 env/
+.env/
 
 # Jupyter
 .ipynb_checkpoints/
@@ -21,9 +22,10 @@ Thumbs.db
 Desktop.ini
 .vscode/
 
-# Secrets
+# Secrets (keep .env.example tracked for contributors)
 .env
-.env.*
+.env.local
+!.env.example
 
 # Data exports / temp
 *.log
@@ -47,3 +49,10 @@ Thumbs.db
 
 # Data exports
 data/exports/
+
+# Office / editor temp
+~$*
+*.docx.lock
+
+# Local env (never commit secrets)
+.env.local

@@ -1,72 +1,138 @@
-# 🏨 Hotel Revenue Analytics & Management Dashboard
+# Hotel Revenue Analytics & Management Dashboard
 
-## 📌 Project Overview
-This end-to-end data analytics project focuses on hotel revenue management and operational performance. By processing raw booking data through a complete data pipeline—from cleaning and transformation to relational modeling and interactive visualization—this project delivers actionable insights into occupancy trends, pricing strategies, and cancellation impacts. 
+End-to-end hospitality analytics for a fictional **Atliq** hotel chain: clean **134K+ bookings** in Python, model a **PostgreSQL star schema**, validate **six industry KPIs** in SQL, and explore results in an interactive **Power BI** dashboard.
 
-The final deliverable is a dynamic Power BI dashboard designed to support stakeholder decision-making and optimize property-level profitability.
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-336791.svg)](https://www.postgresql.org/)
+[![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-F2C811.svg)](https://powerbi.microsoft.com/)
 
-## 🛠️ Tech Stack
-* **Data Cleaning & Profiling:** Python (Pandas, Jupyter Notebooks)
-* **Data Storage & Modeling:** PostgreSQL (Star Schema Architecture)
-* **Data Visualization & Analysis:** Power BI (DAX, Interactive Dashboards)
-* **Version Control:** Git & GitHub
-* **Presentation & Reporting:** Gemma AI / Gamma.app
+---
 
-## 📈 Key Performance Indicators (KPIs) Tracked
-This project focuses on industry-standard hospitality metrics to answer core business questions:
-* **Occupancy Rate (%):** *(Rooms Occupied ÷ Rooms Available) × 100* – Measures how effectively inventory is utilized.
-* **Average Daily Rate (ADR):** *(Total Room Revenue ÷ Number of Rooms Sold)* – Reflects the average price achieved per occupied room.
-* **Revenue Per Available Room (RevPAR):** *(ADR × Occupancy%)* – Combines price and occupancy to measure overall revenue maximization.
-* **Cancellation Rate (%):** *(Cancelled Reservations ÷ Total Reservations) × 100* – Tracks lost revenue opportunities and operational inefficiencies.
-* **Average Length of Stay (ALOS):** *(Total Room Nights Sold ÷ Number of Bookings)* – Helps forecast staffing needs and guest stability.
+## Problem & solution
 
-## 🗄️ Data Architecture (Star Schema)
-The data is modeled in PostgreSQL using a denormalized **Star Schema** optimized for analytical queries. 
+**Problem:** Multi-property hotels need a single view of occupancy, pricing, cancellations, and channel performance—raw bookings alone do not answer revenue-management questions.
 
-**Fact Tables:**
-* `fact_bookings`: Detailed, transaction-level booking records.
-* `fact_aggregated_bookings`: Rolled-up metrics on successful bookings and property capacity.
+**Solution:** A reproducible pipeline from CSV → cleaned tables → PostgreSQL → SQL KPIs → Power BI, with documented findings and portfolio-ready artifacts.
 
-**Dimension Tables:**
-* `dim_hotels`: Property details (Property ID, Name, Category, City).
-* `dim_rooms`: Room classifications and IDs.
-* `dim_date`: Date details (Month, Week No, Day Type) for time-series analysis.
+**Impact (May–Jul 2022 analysis window):**
 
-## 🔄 Project Phases & Methodology
+- Portfolio **occupancy ~58%**, **ADR ~12.7K**, **RevPAR ~7.4K**, **realisation ~70%**
+- **~25% cancellation rate** per property—major revenue leakage
+- **Mumbai** leads revenue (~₹552M); **Delhi** leads guest ratings (~3.78)
+- **Luxury** segment ~**62%** of realized revenue vs Business ~**38%**
 
-### Phase 1: Data Inventory & Profiling
-* Ingested multiple raw CSV files (`fact_bookings.csv`, `dim_hotels.csv`, etc.) using Python and Pandas.
-* Profiled datasets for schemas, data types, null values, and anomalies (e.g., negative guest counts, missing ratings).
+---
 
-### Phase 2: Data Cleaning & Transformation
-* Standardized date formats using Pandas datetime parsing.
-* Cleansed numeric anomalies and handled missing values systematically.
-* Computed derived columns, including Length of Stay (nights), Year/Month identifiers, and Boolean status flags (e.g., `is_cancelled`).
-* Exported sanitized, analysis-ready datasets.
+## Dashboard preview
 
-### Phase 3: Relational Data Modeling
-* Designed and deployed a Star Schema database in PostgreSQL.
-* Created primary and foreign key constraints to ensure data integrity.
-* Bulk-loaded cleaned CSVs into the relational tables using SQL `COPY` commands.
+![Power BI Dashboard](screenshots/BI%20dashboard.png)
 
-### Phase 4: Data Analysis & Visualization
-* Connected Power BI to the PostgreSQL database.
-* Established 1-to-many relationships between Dimension and Fact tables.
-* Authored DAX measures for complex KPIs (Occupancy %, ADR, RevPAR).
-* Developed an interactive dashboard featuring time-series trends, categorical comparisons (by city/hotel class), and KPI scorecards with contextual slicers.
+| Occupancy by property | Cancellation rate |
+|:---:|:---:|
+| ![KPI 1](screenshots/KPI%201%20%E2%80%94%20Occupancy%20%25.png) | ![KPI 4](screenshots/KPI%204%20-%20cancellation%20rate%20analysis.png) |
 
-## 📂 Repository Structure
+More SQL outputs: [`screenshots/`](screenshots/)
+
+---
+
+## Tech stack
+
+| Layer | Tools |
+|-------|--------|
+| Profiling & ETL | Python, Pandas, Jupyter |
+| Database | PostgreSQL, SQLAlchemy |
+| Analytics | SQL (6 KPI scripts + views) |
+| Visualization | Power BI, DAX |
+| Version control | Git, GitHub |
+
+---
+
+## Repository structure
 
 ```text
+Hotel-analytics/
 ├── data/
-│   ├── raw/                 # Original, unmodified CSV files (git-ignored if large)
-│   └── clean/               # Processed, analysis-ready CSV files
-├── scripts/
-│   ├── data_cleaning.ipynb  # Python notebooks for profiling and cleaning
-│   └── schema_setup.sql     # PostgreSQL DDL and COPY commands
+│   ├── raw/                    # Original CSVs
+│   └── clean/                  # Cleaned exports from notebook 2
 ├── docs/
-│   └── presentation.pdf     # Slide deck summarizing findings and methodologies
-├── dashboard/
-│   └── hotel_analytics.pbix # Power BI project file
-├── .gitignore
+│   ├── SETUP.md                # Installation & run order
+│   ├── DATA_DICTIONARY.md      # Column definitions
+│   └── Hotel_Revenue_Analytics_Project_Report.md
+├── powerbi/
+│   └── hotel_anlytics_dashboard_BI.pbix
+├── screenshots/                # Dashboard + SQL result captures
+├── scripts/
+│   ├── python/
+│   │   ├── 1.Hotel_analysis data explaoration.ipynb
+│   │   ├── 2.Hotel_analysis data cleaning.ipynb
+│   │   ├── 3.Hotel_analysis data load to postgresql.ipynb
+│   │   └── project_paths.py    # Portable path helper
+│   └── sql/
+│       ├── hotel-analytics-data-modeling.sql
+│       ├── 1.occupancy_analysis.sql … 6.City-Analysis.sql
+│       └── create-view-in-hospitality-kpis.sql
+├── .env.example
+├── requirements.txt
 └── README.md
+```
+
+---
+
+## Quick start
+
+```bash
+git clone https://github.com/YOUR_USERNAME/Hotel-analytics.git
+cd Hotel-analytics
+python -m venv .venv && .venv\Scripts\activate   # Windows
+pip install -r requirements.txt
+# Set POSTGRES_PASSWORD as a user env var, or optionally copy .env.example → .env
+```
+
+Full steps: **[docs/SETUP.md](docs/SETUP.md)**
+
+**Run order:** Notebook 1 → 2 → 3 → SQL modeling → KPI scripts → Power BI refresh.
+
+---
+
+## KPIs tracked
+
+| KPI | Business question |
+|-----|-------------------|
+| **Occupancy %** | Are we filling rooms efficiently? |
+| **ADR** | What price are we achieving per sold room? |
+| **RevPAR** | How much revenue per available room? |
+| **Cancellation %** | Where is revenue leaking? |
+| **Platform mix** | Which booking channels drive revenue? |
+| **City performance** | Which markets and ratings stand out? |
+
+---
+
+## Data source
+
+Sample **educational hospitality booking data** for portfolio and learning purposes (fictional **Atliq** brand). Not affiliated with any real hotel group.
+
+---
+
+## Documentation
+
+- **[Project report](docs/Hotel_Revenue_Analytics_Project_Report.md)** — Full write-up (overview, EDA, SQL results, recommendations)
+- **[Data dictionary](docs/DATA_DICTIONARY.md)**
+- **[Setup guide](docs/SETUP.md)**
+
+---
+
+## Security
+
+Database credentials come from **OS/user environment variables** (recommended for local work) or an optional **`.env`** file (see `.env.example`). Never commit `.env`. If a password was ever pushed to a public remote, rotate your PostgreSQL password.
+
+---
+
+## License
+
+[MIT](LICENSE) — free to use with attribution.
+
+---
+
+## Author
+
+**Monish** — Data analytics portfolio project (2026)
